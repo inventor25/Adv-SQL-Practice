@@ -568,6 +568,74 @@ end $$ ;
 --  ********************* FUNCTION ***********************
 -- ********************************************************
 
+-- İnsanlar tablomuzdaki belirli maas arasindaki insanların sayisini getiren bir fonsiyon yazalim
+
+create or replace function get_insanlar_count(baslangıc_maas int , bitis_maas int )	
+returns int
+language plpgsql
+as
+
+$$
+	declare
+		get_insanlar_count integer ;
+	begin
+		select count(*) 
+		into get_insanlar_count
+		from insanlar
+		where maas between baslangıc_maas and bitis_maas;
+		
+		return get_insanlar_count;	
+	end $$;
+
+
+-- 1.yol:	( positional notation)
+
+select get_insanlar_count(6000,10000);	
+
+-- 2. yol : ( named notation)
+select get_insanlar_count(
+	
+	baslangıc_maas:= 6000,
+	bitis_maas := 10000
+	);
+	
+	
+-- Task : parametre olarak girilen iki sayının toplamını veren iki_sayiyi_toplami adında fonksiyon yazalım
 
 
 
+create or replace function iki_sayiyi_toplami(sayi_a int , sayi_b int )	
+returns int
+language plpgsql
+as
+
+	$$
+	declare
+		toplam int ;
+	begin
+	toplam := sayi_a+sayi_b;
+	return toplam;
+	end $$;
+
+
+select iki_sayiyi_toplami(100,50);
+
+-- Task : parametre olarak girilen iki sayının çarpımını veren iki_sayiyi_çarp adında fonksiyon yazalım
+
+
+
+create or replace function iki_sayiyi_çarp(sayi_a int , sayi_b int )	
+returns int
+language plpgsql
+as
+
+	$$
+	declare
+		carpim int ;
+	begin
+	carpim := sayi_a*sayi_b;
+	return carpim;
+	end $$;
+
+
+select iki_sayiyi_çarp(100,50);
